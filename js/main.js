@@ -107,4 +107,5 @@ const createNewOffer = () => {
 };
 
 const CARDS_OFFERS = Array.from({length: QUANTITY_CARDS}, createNewOffer);
-
+// eslint-disable-next-line no-console
+console.log(CARDS_OFFERS);
