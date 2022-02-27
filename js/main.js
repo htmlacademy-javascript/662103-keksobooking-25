@@ -63,7 +63,7 @@ function getRandomInteger(min, max) {
 
 function getRandomWithDot(min, max, digits) {
   if (min >= 0 && max >= 0 && max > min && min !== String && max !== String) {
-    return ((Math.random() * (max - min)) + min).toFixed(digits);
+    return Number(((Math.random() * (max - min)) + min).toFixed(digits));
   }
   return 'Исходные данные неверны';
 }
@@ -107,5 +107,4 @@ const createNewOffer = () => {
 };
 
 const CARDS_OFFERS = Array.from({length: QUANTITY_CARDS}, createNewOffer);
-
 
