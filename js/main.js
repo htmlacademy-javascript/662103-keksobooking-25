@@ -1,4 +1,4 @@
-const OFFER_TITLES = [
+const offerTitle = [
   'Спешите успеть!',
   'Только сегодня!',
   'Завтра будет дороже!',
@@ -11,7 +11,7 @@ const OFFER_TITLES = [
   'Только за доллары'
 ];
 
-const OFFER_TYPES = [
+const offerTypes = [
   'palace',
   'flat',
   'house',
@@ -19,13 +19,13 @@ const OFFER_TYPES = [
   'hotel'
 ];
 
-const OFFER_CHECK_IN_OUTS = [
+const offerCheckInOuts = [
   '12:00',
   '13:00',
   '14:00'
 ];
 
-const OFFER_FEATURES = [
+const offerFeatures = [
   'wifi',
   'dishwasher',
   'parking',
@@ -34,15 +34,15 @@ const OFFER_FEATURES = [
   'conditioner'
 ];
 
-const OFFER_DESCRIPTIONS = [
+const offerDescriptions = [
   'Чистота и уют. Всегда вам рады у нас!',
   'Светлая солнечная сторона. Соседи тихие.',
   'Высокие потолки, чисто и просторно!',
   'Без тараканов!',
-  'Не бабушкин ремонт, всё в стили пусть-так!'
+  'Не бабушкин ремонт, всё в стиле пусть-так!'
 ];
 
-const OFFER_PHOTOS = [
+const offerPhoto = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
@@ -50,7 +50,7 @@ const OFFER_PHOTOS = [
 
 const QUANTITY_CARDS = 10;
 
-const AUTHOR_AVATARS = Array.from({length: QUANTITY_CARDS}, (v, k) => ++k);
+const authorAvatars = Array.from({length: QUANTITY_CARDS}, (v, k) => ++k);
 
 function getRandomInteger(min, max) {
   min = Math.ceil(min);
@@ -75,11 +75,10 @@ const createNewOffer = () => {
   const longitude = getRandomWithDot(139.70000, 139.80000, 5);
 
   function getAuthorId() {
-    let AUTHOR_ID = AUTHOR_AVATARS[0];
+    let AUTHOR_ID = authorAvatars.shift();
     if (AUTHOR_ID < 10) {
       AUTHOR_ID = `0${String(AUTHOR_ID)}`;
     }
-    AUTHOR_AVATARS.shift();
     return `img/avatars/user${  AUTHOR_ID  }.png`;
   }
   return {
@@ -87,17 +86,17 @@ const createNewOffer = () => {
       avatar: getAuthorId()
     },
     offer: {
-      title: getRandomArrayElement(OFFER_TITLES),
-      address: `${String(latitude)  }, ${  String(longitude)}`,
+      title: getRandomArrayElement(offerTitle),
+      address: `${latitude  }, ${  longitude}`,
       price: getRandomInteger(1000, 30000),
-      type: getRandomArrayElement(OFFER_TYPES),
+      type: getRandomArrayElement(offerTypes),
       rooms: getRandomInteger(1, 10),
       guest: getRandomInteger(1, 10),
-      checkin: getRandomArrayElement(OFFER_CHECK_IN_OUTS),
-      checkout: getRandomArrayElement(OFFER_CHECK_IN_OUTS),
-      features: OFFER_FEATURES.slice(0, getRandomInteger(1, OFFER_FEATURES.length)),
-      description: getRandomArrayElement(OFFER_DESCRIPTIONS),
-      photos: OFFER_PHOTOS.slice(0, getRandomInteger(1, OFFER_PHOTOS.length))
+      checkin: getRandomArrayElement(offerCheckInOuts),
+      checkout: getRandomArrayElement(offerCheckInOuts),
+      features: offerFeatures.slice(0, getRandomInteger(1, offerFeatures.sort(() => Math.random() - 0.5).length)),
+      description: getRandomArrayElement(offerDescriptions),
+      photos: offerPhoto.slice(0, getRandomInteger(1, offerPhoto.length))
     },
     location: {
       lat: latitude,
@@ -106,6 +105,6 @@ const createNewOffer = () => {
   };
 };
 
-const CARDS_OFFERS = Array.from({length: QUANTITY_CARDS}, createNewOffer);
+const cardsOffers = Array.from({length: QUANTITY_CARDS}, createNewOffer);
 // eslint-disable-next-line no-console
-console.log(CARDS_OFFERS);
+console.log(cardsOffers);
