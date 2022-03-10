@@ -1,6 +1,4 @@
-import {getRandomInteger} from './get-random-integer.js';
-import {getRandomWithDot} from './get-random-with-dot.js';
-import {getRandomArrayElement} from './get-random-array-element.js';
+import {getRandomInteger, getRandomWithDot, getRandomArrayElement} from './utils.js';
 
 const offerTitle = [
   'Спешите успеть!',
