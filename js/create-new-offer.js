@@ -50,7 +50,7 @@ const offerPhoto = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'
 ];
 
-const QUANTITY_CARDS = 1;
+const QUANTITY_CARDS = 10;
 
 const authorAvatars = Array.from({length: QUANTITY_CARDS}, (v, k) => ++k);
 
