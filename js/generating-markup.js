@@ -38,17 +38,13 @@ cardsOffers.forEach(({offer, author}) => {
 
   const offerPhotos = element.querySelector('.popup__photos');
   const offerPhoto = element.querySelector('.popup__photo');
-  if (offer.photos.length) {
-    for (let i = 0; i < offer.photos.length; i++) {
-      offerPhoto.src = offer.photos[i];
-      const cloneOfferPhoto = offerPhoto.cloneNode(true);
-      if (i !== offer.photos.length - 1) {
-        offerPhotos.append(cloneOfferPhoto);
-      }
-    }
-  } else {
-    offerPhotos.classList.add('hidden');
-  }
+
+  offer.photos.forEach((item, index) => {
+    const cloneOfferPhoto = offerPhoto.cloneNode(true);
+    cloneOfferPhoto.src = offer.photos[index];
+    offerPhotos.append(cloneOfferPhoto);
+  });
+  offerPhoto.remove();
 
   element.querySelector('.popup__avatar').src = author.avatar;
   fragmentCard.append(element);
