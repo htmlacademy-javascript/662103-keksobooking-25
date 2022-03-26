@@ -1,7 +1,7 @@
 const allInteractiveEllements = document.querySelectorAll('.ad-form__element');
 const mapFilters = document.querySelectorAll('.map__filter');
 
-function inActiveState() {
+function deActiveState() {
   document.querySelector('.ad-form').classList.add('ad-form--disabled');
   for (const interactiveElement of allInteractiveEllements) {
     interactiveElement.setAttribute('disabled', 'true');
@@ -27,5 +27,5 @@ function activeState() {
   document.querySelector('.map__features').removeAttribute('disabled');
 }
 
-inActiveState();
+deActiveState();
 activeState();
