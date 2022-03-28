@@ -3,7 +3,10 @@ const price = userForm.querySelector('#price');
 const typeOfPrice = userForm.querySelector('#type');
 const roomNumber = userForm.querySelector('#room_number');
 const capacity = userForm.querySelector('#capacity');
-const minPriceOfTypeHouse = {
+const timeIn = userForm.querySelector('#timein');
+const timeOut = userForm.querySelector('#timeout');
+const adTimeInOut = userForm.querySelector('.ad-form__element--time');
+const MIN_PRICE_OF_TYPE_HOUSE = {
   bungalow: 0,
   flat: 1000,
   hotel: 3000,
@@ -25,7 +28,7 @@ const pristine = new Pristine(userForm, {
   errorTextParent: 'ad-form__element',// Элемент, куда будет выводиться текст с ошибкой
   errorTextTag: 'span', // Тег, который будет обрамлять текст ошибки
   errorTextClass: 'ad-form__error',// Класс для элемента с текстом ошибки
-});
+}, true);
 
 function validateTitle (value) {
   return value.length >= 30 && value.length <= 100;
@@ -36,7 +39,7 @@ pristine.addValidator(
   validateTitle,
   'От 30 до 100 символов', 2, true,
 );
-/////////////////
+
 function validatePrice (value) {
   return value <= MAX_PRICE_FOR_NIGHT;
 }
@@ -51,7 +54,7 @@ function priceComparison () {
   const typesOfHouse = typeOfPrice.querySelectorAll('option');
   for (let i = 0; i < typesOfHouse.length; i++) {
     if (typesOfHouse[i].selected) {
-      price.placeholder = minPriceOfTypeHouse[typesOfHouse[i].value];
+      price.placeholder = MIN_PRICE_OF_TYPE_HOUSE[typesOfHouse[i].value];
       price.min = price.placeholder;
     }
   }
@@ -61,7 +64,7 @@ function priceComparison () {
 typeOfPrice.addEventListener('change', priceComparison);
 
 function validateMinPrice () {
-  return price.value >= minPriceOfTypeHouse[typeOfPrice.value];
+  return price.value >= MIN_PRICE_OF_TYPE_HOUSE[typeOfPrice.value];
 }
 
 pristine.addValidator(
@@ -70,8 +73,8 @@ pristine.addValidator(
   priceComparison, 2, true,
 );
 
-////////////////
-const validateGuest = () => ROOM_GUESTS[roomNumber.value].includes(capacity.value);//поменять имена
+
+const validateGuest = () => ROOM_GUESTS[roomNumber.value].includes(capacity.value);
 const getGuestErrorMessage = () => 'Выберите другое кол-во гостей';
 
 pristine.addValidator(
@@ -84,12 +87,18 @@ roomNumber.addEventListener('change', () => {
   pristine.validate(capacity);
 });
 
+const onTimeInOutChange = (evt) => {
+  timeIn.value = timeOut.value = evt.target.value;
+};
+
+adTimeInOut.addEventListener('change', onTimeInOutChange);
+
 userForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
-    alert('Можно отправлять');
+    // alert('Можно отправлять');
   } else {
     evt.preventDefault();
-    alert('Форма невалидна');
+    // alert('Форма невалидна');
   }
 });
