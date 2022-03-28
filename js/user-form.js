@@ -1,15 +1,15 @@
 const userForm = document.querySelector('.ad-form');
 const price = userForm.querySelector('#price');
-// const typeOfPrice = userForm.querySelector('#type'); //для второго задания
+const typeOfPrice = userForm.querySelector('#type');
 const roomNumber = userForm.querySelector('#room_number');
 const capacity = userForm.querySelector('#capacity');
-// const minPriceOfTypeHouse = { //для второго задания
-//   bungalow: 0,
-//   flat: 1000,
-//   hotel: 3000,
-//   house: 5000,
-//   palace: 10000
-// };
+const minPriceOfTypeHouse = {
+  bungalow: 0,
+  flat: 1000,
+  hotel: 3000,
+  house: 5000,
+  palace: 10000
+};
 const MAX_PRICE_FOR_NIGHT = 100000;
 const ROOM_GUESTS = {
   '1': ['1'],
@@ -36,9 +36,9 @@ pristine.addValidator(
   validateTitle,
   'От 30 до 100 символов', 2, true,
 );
-
+/////////////////
 function validatePrice (value) {
-  return value <= 100000;
+  return value <= MAX_PRICE_FOR_NIGHT;
 }
 
 pristine.addValidator(
@@ -47,6 +47,30 @@ pristine.addValidator(
   `Цена за ночь не может превышать ${MAX_PRICE_FOR_NIGHT}`, 2, true,
 );
 
+function priceComparison () {
+  const typesOfHouse = typeOfPrice.querySelectorAll('option');
+  for (let i = 0; i < typesOfHouse.length; i++) {
+    if (typesOfHouse[i].selected) {
+      price.placeholder = minPriceOfTypeHouse[typesOfHouse[i].value];
+      price.min = price.placeholder;
+    }
+  }
+  return `Цена не меньше ${price.min}`;
+}
+
+typeOfPrice.addEventListener('change', priceComparison);
+
+function validateMinPrice () {
+  return price.value >= minPriceOfTypeHouse[typeOfPrice.value];
+}
+
+pristine.addValidator(
+  price,
+  validateMinPrice,
+  priceComparison, 2, true,
+);
+
+////////////////
 const validateGuest = () => ROOM_GUESTS[roomNumber.value].includes(capacity.value);//поменять имена
 const getGuestErrorMessage = () => 'Выберите другое кол-во гостей';
 
@@ -63,9 +87,9 @@ roomNumber.addEventListener('change', () => {
 userForm.addEventListener('submit', (evt) => {
   const isValid = pristine.validate();
   if (isValid) {
-    // alert('Можно отправлять');
+    alert('Можно отправлять');
   } else {
     evt.preventDefault();
-    // alert('Форма невалидна');
+    alert('Форма невалидна');
   }
 });
